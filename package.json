@@ -1,0 +1,27 @@
+{
+  "name": "chat-app",
+  "version": "1.0.0",
+  "description": "An app written in node.js and socket.io that allows users to chat real-time",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rbunch-dc/4-17immersive-nodejs101.git"
+  },
+  "keywords": [
+    "chat",
+    "nodejs",
+    "socketio"
+  ],
+  "author": "Robert Bunch",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rbunch-dc/4-17immersive-nodejs101/issues"
+  },
+  "homepage": "https://github.com/rbunch-dc/4-17immersive-nodejs101#readme",
+  "dependencies": {
+    "socket.io": "^2.0.1"
+  }
+}
