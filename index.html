@@ -5,6 +5,13 @@
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
+<style type="text/css" media="screen">
+	#messages{
+		height: 50vh;
+		border: 1px solid black;
+	}
+</style>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 </head>
@@ -13,18 +20,30 @@
 
 	<div class="container">
 		<div class="row">
-			<div class="col-sm-12" id="users">
+			<div class="col-sm-3" id="users">
+				<h4>Connected Users</h4>
 				<!-- Users will go in here! -->
 			</div>
-			<div class="col-sm-12">
-				<button id="send-message" class="btn btn-primary">
-					Click to send message to server
-				</button>
+
+			<div id="messages" class="col-sm-6">
+
+			</div>
+
+			<div class="col-sm-12 text-center">
+				<form id="submit-message">
+					<input type="text" id="new-message" />
+					<button type="submit" id="send-message" class="btn btn-primary">
+						<!-- Click to send message to server -->
+						Send!
+					</button>
+				</form>
 			</div>
 		</div>
 	</div>
 
-<script type="text/javascript" src="/socket.io/socket.io.js"></script>
+<!-- <script type="text/javascript" src="/socket.io/socket.io.js"></script> -->
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.1/socket.io.js"></script>
 
 <script type="text/javascript">
 	// alert("TesT")
@@ -42,9 +61,23 @@
 		usersDiv.innerHTML += `<div class="col-sm-12">${userName}</div>`;
 	});
 
-	$('#send-message').click(function(){
-		socketio.emit('sendMessage');
+
+	$('#submit-message').submit(function(event){
+		event.preventDefault();
+		var newMessage = $('#new-message').val();
+		socketio.emit('messageToServer',{
+			newMessage:newMessage,
+			name:name
+		});
 	});
+
+	socketio.on('messageToClient',(message)=>{
+		$('#messages').prepend('<p>'+message+'</p>');
+	})
+
+	// $('#send-message').click(function(){
+	// 	socketio.emit('sendMessage');
+	// });
 
 </script>
 

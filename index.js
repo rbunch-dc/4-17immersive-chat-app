@@ -34,6 +34,11 @@ io.sockets.on('connect',(socket)=>{
 		console.log("Someone clicked on the big blue button.");
 	});
 
+	socket.on('messageToServer',(messageObj)=>{
+		console.log(messageObj);
+		io.sockets.emit('messageToClient',messageObj.newMessage + ' -- ' + messageObj.name);
+	});
+
 });
 
 // console.log("The node file is working.");
