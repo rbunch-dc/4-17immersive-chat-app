@@ -47,17 +47,19 @@
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.1/socket.io.js"></script>
 
+<script type="text/javascript" src="./config.js"></script>
+
 <script type="text/javascript">
 	// alert("TesT")
 	console.log("Browser JavaScript");
 	var name = prompt("What is your name?");
 	console.dir(io);
 	// console.log(window.io);
-	var socketio = io.connect('http://127.0.0.1:8080');
+	var socketio = io.connect(socketUrl);
 	// Send an event to the server
 	socketio.emit('nameToServer',name);
 
-	socketio.on('newUser',(userNameArray)=>{
+	socketio.on('newUser',(userName)=>{
 		// console.log(userName + " just joined!");
 		// var usersDiv = document.getElementById('users');
 		$('#users').append(`<div class="col-sm-12">${userName}</div>`);

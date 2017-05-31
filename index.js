@@ -29,8 +29,19 @@ var server = http.createServer((req, res)=>{
 				res.end(data);
 			}			
 		});
+	}else if(req.url == '/config.js'){
+		fs.readFile('config.js', 'utf-8',(error,data)=>{
+			if(error){
+				res.writeHead(500,{'content-type':'text/html'});
+				res.end('Internal Server Error');
+			}else{
+				res.writeHead(200,{'content-type':'application/javascript'});
+				res.end(data);
+			}			
+		});
 	}else{
-		// 404
+		res.writeHead(404,{'content-type':'text/html'});
+		res.end('<h1>THis page does not exist</h1>');	
 	}
 });
 
