@@ -35,15 +35,21 @@ var server = http.createServer((req, res)=>{
 });
 
 var io = socketio.listen(server);
+var users = [];
 // Handle socket connections...
 io.sockets.on('connect',(socket)=>{
 	console.log("Someone connected via socket!");
 	// console.log(socket);
 
 	socket.on('nameToServer',(name)=>{
-		console.log(name + " just joined.");
-		io.sockets.emit('newUser',name);
+		var clientInfo = new Object();
+		clientInfo.name = name;
+		clientInfo.clientId = socket.id;
+		users.push(clientInfo);
+		console.log(clientInfo.name + " just joined.");
+		io.sockets.emit('newUser',users);
 	});
+
 	socket.on('sendMessage',()=>{
 		console.log("Someone clicked on the big blue button.");
 	});
@@ -51,6 +57,18 @@ io.sockets.on('connect',(socket)=>{
 	socket.on('messageToServer',(messageObj)=>{
 		console.log(messageObj);
 		io.sockets.emit('messageToClient',messageObj.newMessage + ' -- ' + messageObj.name);
+	});
+
+	socket.on('disconnect',(data)=>{
+		console.log('someone logged off')
+		for (let i = 0; i < users.length; i++){
+			var currentUser = users[i];
+			if (currentUser.clientId == socket.id){
+				users.pop(currentUser);
+				break;
+			}
+		}
+		// io.sockets.emit('userDisconnect',users);
 	});
 
 });

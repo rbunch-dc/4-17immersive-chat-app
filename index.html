@@ -57,10 +57,10 @@
 	// Send an event to the server
 	socketio.emit('nameToServer',name);
 
-	socketio.on('newUser',(userName)=>{
-		console.log(userName + " just joined!");
-		var usersDiv = document.getElementById('users');
-		usersDiv.innerHTML += `<div class="col-sm-12">${userName}</div>`;
+	socketio.on('newUser',(userNameArray)=>{
+		// console.log(userName + " just joined!");
+		// var usersDiv = document.getElementById('users');
+		$('#users').append(`<div class="col-sm-12">${userName}</div>`);
 	});
 
 
